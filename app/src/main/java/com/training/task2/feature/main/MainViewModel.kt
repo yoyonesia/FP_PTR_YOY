@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.training.task2.di.CartoonAPI
 import com.training.task2.model.Cartoon
 import com.training.task2.repository.APIService
 import dagger.hilt.android.lifecycle.HiltViewModel

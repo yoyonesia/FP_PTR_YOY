@@ -13,9 +13,6 @@
         <action
             android:id="@+id/actionLogin"
             app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/actionByPass"
-            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"

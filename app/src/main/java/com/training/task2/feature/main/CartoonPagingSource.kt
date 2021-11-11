@@ -5,16 +5,17 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.training.task2.di.CartoonAPI
-import com.training.task2.di.LoginAPI
+
 import com.training.task2.model.Cartoon
 import com.training.task2.repository.APIService
 import java.lang.Exception
 import javax.inject.Inject
-import javax.inject.Named
+
 import javax.inject.Singleton
 
+
 @Singleton
-class CartoonPagingSource @Inject constructor(val apiService: APIService) : PagingSource<Int, Cartoon>() {
+class CartoonPagingSource @Inject constructor(@CartoonAPI private val apiService: APIService) : PagingSource<Int, Cartoon>() {
     override fun getRefreshKey(state: PagingState<Int, Cartoon>): Int? {
         return state.anchorPosition
     }

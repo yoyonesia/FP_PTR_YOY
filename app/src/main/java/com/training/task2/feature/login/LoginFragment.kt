@@ -6,53 +6,79 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.paging.PagingSource
-import com.google.android.material.textfield.TextInputEditText
-import com.training.task2.R
-import com.training.task2.di.AppModule
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+
+import com.training.task2.databinding.FragmentLoginBinding
+
 import com.training.task2.di.LoginAPI
+import com.training.task2.model.Login.LoginData
+import com.training.task2.model.Login.LoginResponse
 import com.training.task2.repository.LoginAPIService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.Exception
+import com.training.task2.state.LoginState
+import com.training.task2.ui.dismissAllDialogs
+import com.training.task2.ui.showFailLoadDataDialog
+import com.training.task2.ui.showLoadingDialog
+import com.training.task2.util.SessionManagerUtil
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class LoginFragment(view: View) : Fragment() {
+@AndroidEntryPoint
+class LoginFragment: Fragment() {
+    var token =""
     private val TAG = "MainActivity_"
-    @Inject
-    @LoginAPI
-    lateinit var apiService:LoginAPIService
-
-    private val buttonView: Button = view.findViewById(R.id.loginButton)
-    private val inputUsername: TextInputEditText = view.findViewById(R.id.input_username)
-    private val inputPassword: TextInputEditText = view.findViewById(R.id.input_password)
+    private lateinit var binding:FragmentLoginBinding
+    private lateinit var loginAdapter: LoginAdapter
+    @LoginAPI @Inject lateinit var apiService: LoginAPIService
+    private val viewModel:LoginViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return binding.root
     }
 
-    init {
-        buttonView.setOnClickListener {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loginState.observe(viewLifecycleOwner){
+            when(it){
+                is LoginState.LOADING -> showLoadingDialog()
+                is LoginState.LOGGED_IN -> handleLoggedInState(it.loginResponse)
+                is LoginState.ERROR -> showFailLoadDataDialog {  }
+            }
+        }
+        binding.loginButton.setOnClickListener {
+            viewModel.login(binding.inputUsername.text.toString(),binding.inputPassword.text.toString())
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = apiService.login("454041184B0240FBA3AACD15A1F7A8BB",inputUsername.text.toString(),inputPassword.text.toString())
-                withContext(Dispatchers.Main) {
-                    Log.d("aa", response.body().toString())
-            }
-            }
         }
     }
 
+    private fun handleLoggedInState(loginResponse: LoginResponse) {
+        val loginData = loginResponse.loginData
+        context?.let { SessionManagerUtil().getInstance()?.setUser(it,loginData.username) }
+        token = loginResponse.token
+        startAndStoreSession()
+        dismissAllDialogs()
+        navigateToHome()
+    }
+
+
+    private fun navigateToHome(){
+        val navDirection = LoginFragmentDirections.actionMain()
+
+        findNavController().navigate(navDirection)
+    }
+
+    fun startAndStoreSession() {
+        context?.let {
+            SessionManagerUtil().getInstance()
+                ?.storeUserToken(it, token)
+        }
+        context?.let { SessionManagerUtil().getInstance()?.startUserSession(it, 300) }
+    }
 }
 
 
