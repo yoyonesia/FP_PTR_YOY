@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dialog -->
+    <dimen name="dialog_content_radius">8dp</dimen>
+    <dimen name="dialog_content_min_width">240dp</dimen>
+    <dimen name="dialog_content_min_height">158dp</dimen>
+    <dimen name="dialog_content_padding">24dp</dimen>
+    <dimen name="dialog_icon_width">100dp</dimen>
+    <dimen name="dialog_icon_height">75dp</dimen>
+    <dimen name="dialog_component_space">8dp</dimen>
+    <dimen name="dialog_action_button_space">32dp</dimen>
+    <dimen name="common_dialog_button_width">130dp</dimen>
+
+</resources>
