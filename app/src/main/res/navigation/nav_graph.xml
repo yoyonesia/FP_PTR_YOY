@@ -7,21 +7,23 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.training.task2.feature.splash.SplashFragment"
+        android:name="com.training.miniproject.feature.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/actionLogin"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/in_up"
+            app:exitAnim="@anim/out_up" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.training.task2.feature.main.MainFragment"
+        android:name="com.training.miniproject.feature.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.training.task2.feature.login.LoginFragment"
+        android:name="com.training.miniproject.feature.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
