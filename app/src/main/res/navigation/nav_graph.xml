@@ -20,7 +20,11 @@
         android:id="@+id/mainFragment"
         android:name="com.training.miniproject.feature.main.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <argument
+            android:name="loginData"
+            app:argType="com.training.miniproject.model.login.LoginData" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.training.miniproject.feature.login.LoginFragment"
@@ -28,6 +32,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/actionMain"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/in_down"
+            app:exitAnim="@anim/out_down" />
     </fragment>
 </navigation>

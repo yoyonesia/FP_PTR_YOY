@@ -1,7 +1,10 @@
 package com.training.miniproject.model.login
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class LoginData(
     val avatar: String,
     val banned: String,
@@ -11,7 +14,7 @@ data class LoginData(
     val dateCreated: String,
     val email: String,
     @field:SerializedName("forgot_exp")
-    val forgotExp: Any,
+    val forgotExp: String,
     @field:SerializedName("full_name")
     val fullName: String,
     val id: String,
@@ -22,16 +25,16 @@ data class LoginData(
     @field:SerializedName("last_login")
     val lastLogin: String,
     @field:SerializedName("oauth_provider")
-    val oauthProvider: Any,
+    val oauthProvider: String,
     @field:SerializedName("oauth_uid")
-    val oauthUid: Any,
+    val oauthUid: String,
     @field:SerializedName("remember_exp")
-    val rememberExp: Any,
+    val rememberExp: String,
     @field:SerializedName("remember_time")
-    val rememberTime: Any,
+    val rememberTime: String,
     @field:SerializedName("top_secret")
-    val topSecret: Any,
+    val topSecret: String,
     val username: String,
     @field:SerializedName("verification_code")
-    val verificationCode: Any
-)
+    val verificationCode: String
+): Parcelable

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.miniproject.databinding.FragmentMainBinding
 import com.training.miniproject.model.cartoon.Cartoon
@@ -21,6 +22,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private val args: MainFragmentArgs by navArgs()
 
     lateinit var cartoonAdapter: CartoonAdapter
 
@@ -47,6 +49,8 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.tvName.text = "Welcome, ${args.loginData.fullName}"
     }
 
     private fun initRecyclerView(){

@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
 import com.training.miniproject.databinding.FragmentLoginBinding
+import com.training.miniproject.model.login.LoginData
 
 import com.training.miniproject.model.login.LoginResponse
 import com.training.miniproject.state.LoginState
@@ -48,28 +49,16 @@ class LoginFragment: Fragment() {
     }
 
     private fun handleLoggedInState(loginResponse: LoginResponse) {
-//        val loginData = loginResponse.loginData
-//        context?.let { SessionManagerUtil().getInstance()?.setUser(it,loginData.username) }
-//        token = loginResponse.token
-        startAndStoreSession()
         dismissAllDialogs()
-        navigateToHome()
+        navigateToHome(loginResponse.loginData)
     }
 
 
-    private fun navigateToHome(){
-        val navDirection = LoginFragmentDirections.actionMain()
-
+    private fun navigateToHome(loginData: LoginData){
+        val navDirection = LoginFragmentDirections.actionMain(loginData)
         findNavController().navigate(navDirection)
     }
 
-    fun startAndStoreSession() {
-        context?.let {
-//            SessionManagerUtil().getInstance()
-//                ?.storeUserToken(it, token)
-        }
-//        context?.let { SessionManagerUtil().getInstance()?.startUserSession(it, 300) }
-    }
 }
 
 
