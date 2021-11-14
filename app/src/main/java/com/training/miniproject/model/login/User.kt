@@ -5,41 +5,41 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LoginData(
+data class User(
     @field:SerializedName("avatar")
-    val avatar: String,
+    val avatar: String?,
     @field:SerializedName("banned")
-    val banned: String,
+    val banned: String?,
     @field:SerializedName("company_id")
-    val companyId: String,
+    val companyId: String?,
     @field:SerializedName("date_created")
-    val dateCreated: String,
+    val dateCreated: String?,
     @field:SerializedName("email")
-    val email: String,
+    val email: String?,
     @field:SerializedName("forgot_exp")
-    val forgotExp: String,
+    val forgotExp: String?,
     @field:SerializedName("full_name")
-    val fullName: String,
+    val fullName: String?,
     @field:SerializedName("id")
-    val id: String,
+    val id: String?,
     @field:SerializedName("ip_address")
-    val ipAddress: String,
+    val ipAddress: String?,
     @field:SerializedName("last_activity")
-    val lastActivity: String,
+    val lastActivity: String?,
     @field:SerializedName("last_login")
-    val lastLogin: String,
+    val lastLogin: String?,
     @field:SerializedName("oauth_provider")
-    val oauthProvider: String,
+    val oauthProvider: String?,
     @field:SerializedName("oauth_uid")
-    val oauthUid: String,
+    val oauthUid: String?,
     @field:SerializedName("remember_exp")
-    val rememberExp: String,
+    val rememberExp: String?,
     @field:SerializedName("remember_time")
-    val rememberTime: String,
+    val rememberTime: String?,
     @field:SerializedName("top_secret")
-    val topSecret: String,
+    val topSecret: String?,
     @field:SerializedName("username")
-    val username: String,
+    val username: String?,
     @field:SerializedName("verification_code")
-    val verificationCode: String
+    val verificationCode: String?
 ): Parcelable

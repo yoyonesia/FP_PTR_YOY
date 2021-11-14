@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.core.content.edit
 import com.training.miniproject.model.login.LoginResponse
 import com.training.miniproject.repository.api.LoginAPIService
+import com.training.miniproject.repository.api.UserRepository
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -16,7 +17,6 @@ interface LoginRepository{
         password: String
     ): LoginResponse?
 
-    suspend fun isLoggedIn(): Boolean
     suspend fun getToken(): String
     suspend fun saveToken(token: String)
     suspend fun clearToken()
@@ -25,7 +25,8 @@ interface LoginRepository{
 
 class LoginRepositoryImpl @Inject constructor(
     private val loginApiService: LoginAPIService,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val userRepository: UserRepository
 ): LoginRepository {
 
     companion object {
@@ -38,13 +39,12 @@ class LoginRepositoryImpl @Inject constructor(
             return loginApiService.login(key, username, password).also {
                 Log.d(TAG, "response: $it")
                 saveToken(it.token)
+                userRepository.replaceUser(it.user)
             }
         }catch (e: Exception){
             return null
         }
     }
-
-    override suspend fun isLoggedIn(): Boolean = !getToken().isNullOrBlank()
 
     override suspend fun getToken(): String {
         return sharedPreferences.getString(KEY_PREFS_LOGIN_TOKEN, "") ?: ""

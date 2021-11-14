@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.training.miniproject.databinding.FragmentSplashBinding
+import com.training.miniproject.model.login.User
 import com.training.miniproject.state.LoginState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +31,7 @@ class SplashFragment : Fragment() {
 
         viewModel.loginState.observe(viewLifecycleOwner){
             when(it){
-                is LoginState.LOGGED_IN -> navigateToMainPage()
+                is LoginState.LOGGED_IN -> navigateToMainPage(it.user)
                 is LoginState.NOT_LOGGED_IN -> navigateToLoginPage()
             }
         }
@@ -48,9 +49,9 @@ class SplashFragment : Fragment() {
         findNavController().navigate(navDirection)
     }
 
-    private fun navigateToMainPage(){
-//        val navDirection = SplashFragmentDirections.actionMain()
-//        findNavController().navigate(navDirection)
+    private fun navigateToMainPage(user: User){
+        val navDirection = SplashFragmentDirections.actionMain(user)
+        findNavController().navigate(navDirection)
     }
 
 }

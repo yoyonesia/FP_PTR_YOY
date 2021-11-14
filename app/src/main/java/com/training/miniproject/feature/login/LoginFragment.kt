@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
 import com.training.miniproject.databinding.FragmentLoginBinding
-import com.training.miniproject.model.login.LoginData
+import com.training.miniproject.model.login.User
 
 import com.training.miniproject.model.login.LoginResponse
 import com.training.miniproject.state.LoginState
@@ -60,12 +60,12 @@ class LoginFragment: Fragment() {
 
     private fun handleLoggedInState(loginResponse: LoginResponse) {
         dismissAllDialogs()
-        navigateToHome(loginResponse.loginData)
+        navigateToHome(loginResponse.user)
     }
 
 
-    private fun navigateToHome(loginData: LoginData){
-        val navDirection = LoginFragmentDirections.actionMain(loginData)
+    private fun navigateToHome(user: User){
+        val navDirection = LoginFragmentDirections.actionMain(user)
         findNavController().navigate(navDirection)
     }
 

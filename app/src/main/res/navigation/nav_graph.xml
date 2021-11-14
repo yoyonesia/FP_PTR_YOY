@@ -16,8 +16,8 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <argument
-            android:name="loginData"
-            app:argType="com.training.miniproject.model.login.LoginData" />
+            android:name="user"
+            app:argType="com.training.miniproject.model.login.User" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvName.text = "Welcome, ${args.loginData.fullName}"
+        binding.tvName.text = "Welcome, ${args.user.fullName}"
     }
 
     private fun initRecyclerView(){

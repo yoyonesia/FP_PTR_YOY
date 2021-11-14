@@ -18,7 +18,7 @@ object NetworkModule {
     @CartoonAPI
     @Provides
     @Singleton
-    fun cartoonRetrofit(): Retrofit {
+    fun provideCartoonRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -28,14 +28,14 @@ object NetworkModule {
     @CartoonAPI
     @Provides
     @Singleton
-    fun cartoonApiService(@CartoonAPI retrofit: Retrofit): CartoonAPIService {
+    fun provideCartoonApiService(@CartoonAPI retrofit: Retrofit): CartoonAPIService {
         return retrofit.create(CartoonAPIService::class.java)
     }
 
     @LoginAPI
     @Provides
     @Singleton
-    fun loginRetrofit(): Retrofit {
+    fun provideLoginRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://talentpool.oneindonesia.id/api/user/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -45,7 +45,7 @@ object NetworkModule {
     @LoginAPI
     @Provides
     @Singleton
-    fun loginApiService(@LoginAPI retrofit: Retrofit): LoginAPIService {
+    fun provideLoginApiService(@LoginAPI retrofit: Retrofit): LoginAPIService {
         return retrofit.create(LoginAPIService::class.java)
     }
 
