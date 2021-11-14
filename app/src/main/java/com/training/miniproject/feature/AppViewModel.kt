@@ -5,17 +5,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.training.miniproject.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import java.util.*
 
 private val TAG = "AppViewModel"
 
 open class AppViewModel: ViewModel() {
-    private val appStateMutable = MutableLiveData<AppState>().apply { value = AppState.NORMAL }
-    val appState: LiveData<AppState> = appStateMutable
+    private val appStateMutable = MutableStateFlow<AppState>(AppState.NORMAL)
+    val appState = appStateMutable.asStateFlow()
 
     private var timer:Timer? = null
 
-    fun postTimeoutState() = appStateMutable.postValue(AppState.TIMEOUT)
+    fun postTimeoutState() {
+        appStateMutable.value = AppState.TIMEOUT
+    }
 
     fun startUserSession() {
         cancelTimer()
@@ -36,8 +42,8 @@ open class AppViewModel: ViewModel() {
 
 }
 
-fun LiveData<AppState>.onSessionLogout(lifecycleOwner: LifecycleOwner, block: () -> Unit) =
-    observe(lifecycleOwner) {
+suspend fun StateFlow<AppState>.onSessionLogout( block: () -> Unit) =
+    collectLatest {
         if (it == AppState.TIMEOUT) block.invoke()
     }
 

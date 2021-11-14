@@ -12,12 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.training.miniproject.MiniProjectApplication
 import com.training.miniproject.databinding.FragmentMainBinding
 import com.training.miniproject.feature.onSessionLogout
 import com.training.miniproject.feature.splash.SplashActivity
 import com.training.miniproject.feature.splash.UserInteractionListener
 import com.training.miniproject.model.cartoon.Cartoon
+import com.training.miniproject.ui.showSessionTimeoutDialog
 import com.training.miniproject.ui.showSucceedDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -59,9 +59,12 @@ class MainFragment : Fragment(), UserInteractionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Observe session
-        viewModel.appState.onSessionLogout(viewLifecycleOwner){
-            viewModel.logout().let {
-                navigateToLoginPage()
+        lifecycleScope.launchWhenCreated {
+            viewModel.appState.onSessionLogout(){
+                viewModel.logout().let {
+                    showSessionTimeoutDialog()
+                    navigateToLoginPage()
+                }
             }
         }
 

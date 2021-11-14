@@ -19,7 +19,7 @@ fun Fragment.dismissAllDialogs() {
 
 fun Fragment.showLoadingDialog(){
     LoadingDialog.Builder(requireContext())
-        .setAnimation(R.raw.loading)
+        .setAnimation(R.raw.ram_loading)
         .setCancelable(false)
         .setMessage("Loading")
         .build()
@@ -29,7 +29,7 @@ fun Fragment.showLoadingDialog(){
 fun Fragment.showFailLoadDataDialog(onOkAction: () -> Unit){
     dismissAllDialogs()
     AppDialog.Builder(requireContext())
-        .setAnimation(R.raw.person_failed)
+        .setAnimation(R.raw.ram_failed)
         .setMessage("Failed Load Data")
         .setPositiveButtonText("OK")
         .setPositiveButtonAction {
@@ -38,6 +38,20 @@ fun Fragment.showFailLoadDataDialog(onOkAction: () -> Unit){
         }
         .build()
         .show(parentFragmentManager, "FailLoadDataDialog")
+}
+
+fun Fragment.showLoginFailedDialog(onOkAction: () -> Unit){
+    dismissAllDialogs()
+    AppDialog.Builder(requireContext())
+        .setAnimation(R.raw.ram_failed)
+        .setMessage("Login Failed")
+        .setPositiveButtonText("OK")
+        .setPositiveButtonAction {
+            dismissAllDialogs()
+            onOkAction.invoke()
+        }
+        .build()
+        .show(parentFragmentManager, "LoginFailedDialog")
 }
 
 fun Fragment.showSucceedDialog(){
@@ -49,4 +63,14 @@ fun Fragment.showSucceedDialog(){
         .setMessage("Successfully Load Data")
         .build()
         .show(parentFragmentManager, "SucceedDialog")
+}
+
+fun Fragment.showSessionTimeoutDialog(){
+    dismissAllDialogs()
+    AppDialog.Builder(requireContext())
+        .setCancelable(true)
+        .setAnimation(R.raw.ram_failed)
+        .setMessage("Session Time Out")
+        .build()
+        .show(parentFragmentManager, "SessionTimeoutDialog")
 }

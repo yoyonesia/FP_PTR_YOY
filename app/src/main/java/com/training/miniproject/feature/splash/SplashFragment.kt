@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.training.miniproject.databinding.FragmentSplashBinding
 import com.training.miniproject.model.login.User
 import com.training.miniproject.state.LoginState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
@@ -29,10 +31,12 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loginState.observe(viewLifecycleOwner){
-            when(it){
-                is LoginState.LOGGED_IN -> navigateToMainPage(it.user)
-                is LoginState.NOT_LOGGED_IN -> navigateToLoginPage()
+        lifecycleScope.launchWhenCreated {
+            viewModel.loginState.collectLatest{
+                when(it){
+                    is LoginState.LOGGED_IN -> navigateToMainPage(it.user)
+                    is LoginState.NOT_LOGGED_IN -> navigateToLoginPage()
+                }
             }
         }
 

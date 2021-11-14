@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 
 import com.training.miniproject.databinding.FragmentLoginBinding
@@ -17,7 +18,9 @@ import com.training.miniproject.state.LoginState
 import com.training.miniproject.ui.dismissAllDialogs
 import com.training.miniproject.ui.showFailLoadDataDialog
 import com.training.miniproject.ui.showLoadingDialog
+import com.training.miniproject.ui.showLoginFailedDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LoginFragment: Fragment() {
@@ -45,11 +48,13 @@ class LoginFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loginState.observe(viewLifecycleOwner){
-            when(it){
-                is LoginState.LOADING -> showLoadingDialog()
-                is LoginState.LOGIN_SUCCESS -> handleLoggedInState(it.loginResponse)
-                is LoginState.ERROR -> showFailLoadDataDialog {  }
+        lifecycleScope.launchWhenCreated {
+            viewModel.loginState.collectLatest{
+                when(it){
+                    is LoginState.LOADING -> showLoadingDialog()
+                    is LoginState.LOGIN_SUCCESS -> handleLoggedInState(it.loginResponse)
+                    is LoginState.ERROR -> showLoginFailedDialog {  }
+                }
             }
         }
         binding.loginButton.setOnClickListener {
