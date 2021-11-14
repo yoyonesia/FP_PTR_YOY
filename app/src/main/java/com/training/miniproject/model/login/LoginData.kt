@@ -6,17 +6,21 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class LoginData(
+    @field:SerializedName("avatar")
     val avatar: String,
+    @field:SerializedName("banned")
     val banned: String,
     @field:SerializedName("company_id")
     val companyId: String,
     @field:SerializedName("date_created")
     val dateCreated: String,
+    @field:SerializedName("email")
     val email: String,
     @field:SerializedName("forgot_exp")
     val forgotExp: String,
     @field:SerializedName("full_name")
     val fullName: String,
+    @field:SerializedName("id")
     val id: String,
     @field:SerializedName("ip_address")
     val ipAddress: String,
@@ -34,6 +38,7 @@ data class LoginData(
     val rememberTime: String,
     @field:SerializedName("top_secret")
     val topSecret: String,
+    @field:SerializedName("username")
     val username: String,
     @field:SerializedName("verification_code")
     val verificationCode: String

@@ -11,7 +11,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.training.task2"
+        applicationId "com.training.miniproject"
         minSdk 21
         targetSdk 30
         versionCode 1

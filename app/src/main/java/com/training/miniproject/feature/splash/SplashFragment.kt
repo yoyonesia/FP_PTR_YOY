@@ -5,11 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.training.miniproject.databinding.FragmentSplashBinding
+import com.training.miniproject.state.LoginState
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
+    private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,17 +28,29 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.loginState.observe(viewLifecycleOwner){
+            when(it){
+                is LoginState.LOGGED_IN -> navigateToMainPage()
+                is LoginState.NOT_LOGGED_IN -> navigateToLoginPage()
+            }
+        }
+
         val ivLogo = binding.ivLogo
         ivLogo.alpha = 0f
         ivLogo.animate().setDuration(2000).alpha(1f).withEndAction{
-            navigateToHome()
+            viewModel.checkLoginState()
         }
 
     }
 
-    private fun navigateToHome(){
+    private fun navigateToLoginPage(){
         val navDirection = SplashFragmentDirections.actionLogin()
         findNavController().navigate(navDirection)
+    }
+
+    private fun navigateToMainPage(){
+//        val navDirection = SplashFragmentDirections.actionMain()
+//        findNavController().navigate(navDirection)
     }
 
 }

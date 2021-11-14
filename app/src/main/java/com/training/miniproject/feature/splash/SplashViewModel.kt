@@ -1,4 +1,4 @@
-package com.training.miniproject.feature.login
+package com.training.miniproject.feature.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,21 +10,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val loginRepository: LoginRepository
-    ):ViewModel() {
+): ViewModel() {
 
     private val loginStateMutable= MutableLiveData<LoginState>().apply { LoginState.INITIAL }
-    val loginState:LiveData<LoginState> = loginStateMutable
+    val loginState: LiveData<LoginState> = loginStateMutable
 
-    fun login(username:String,password:String)=viewModelScope.launch{
+    fun checkLoginState() = viewModelScope.launch{
         loginStateMutable.value = LoginState.LOADING
-        loginRepository.login(username,password).let {
-            if(it != null){
-                loginStateMutable.value = LoginState.LOGIN_SUCCESS(it)
-            }else loginStateMutable.value = LoginState.ERROR
-         }
+        loginRepository.isLoggedIn().let {
+            when(it){
+                true -> loginStateMutable.value = LoginState.LOGGED_IN
+                false -> loginStateMutable.value = LoginState.NOT_LOGGED_IN
+            }
+        }
     }
+
 }

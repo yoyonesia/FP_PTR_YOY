@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 
@@ -25,6 +26,15 @@ class LoginFragment: Fragment() {
     private lateinit var binding:FragmentLoginBinding
     private val viewModel:LoginViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                activity!!.finish()
+            }
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +48,7 @@ class LoginFragment: Fragment() {
         viewModel.loginState.observe(viewLifecycleOwner){
             when(it){
                 is LoginState.LOADING -> showLoadingDialog()
-                is LoginState.LOGGED_IN -> handleLoggedInState(it.loginResponse)
+                is LoginState.LOGIN_SUCCESS -> handleLoggedInState(it.loginResponse)
                 is LoginState.ERROR -> showFailLoadDataDialog {  }
             }
         }

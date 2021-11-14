@@ -7,7 +7,9 @@ sealed class LoginState {
     object INITIAL : LoginState()
     object LOADING : LoginState()
     object ERROR : LoginState()
-    class LOGGED_IN(val loginResponse: LoginResponse) : LoginState()
+    object LOGGED_IN : LoginState()
+    object NOT_LOGGED_IN : LoginState()
+    class LOGIN_SUCCESS(val loginResponse: LoginResponse) : LoginState()
     object RETRY : LoginState()
 }
 
