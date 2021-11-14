@@ -22,8 +22,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'int', 'SESSION_TIMEOUT', sessionTimeout
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField 'int', 'SESSION_TIMEOUT', sessionTimeout
         }
     }
     compileOptions {
