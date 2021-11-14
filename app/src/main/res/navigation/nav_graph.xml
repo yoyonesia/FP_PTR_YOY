@@ -33,5 +33,6 @@
         android:id="@+id/actionLogin"
         app:destination="@id/loginFragment"
         app:enterAnim="@anim/in_up"
-        app:exitAnim="@anim/out_up" />
+        app:exitAnim="@anim/out_up"
+        app:launchSingleTop="false" />
 </navigation>

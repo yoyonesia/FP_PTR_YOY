@@ -39,7 +39,7 @@ class MainFragment : Fragment(), UserInteractionListener {
         viewModel.startUserSession()
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+                activity?.finish()
             }
         })
     }
@@ -60,7 +60,9 @@ class MainFragment : Fragment(), UserInteractionListener {
         super.onViewCreated(view, savedInstanceState)
         //Observe session
         viewModel.appState.onSessionLogout(viewLifecycleOwner){
-            activity?.finish()
+            viewModel.logout().let {
+                navigateToLoginPage()
+            }
         }
 
         binding.tvName.text = "Welcome, ${args.user.fullName}"
@@ -84,6 +86,11 @@ class MainFragment : Fragment(), UserInteractionListener {
                 cartoonAdapter.submitData(it)
             }
         }
+    }
+
+    private fun navigateToLoginPage(){
+        val navDirection = MainFragmentDirections.actionLogin()
+        findNavController().navigate(navDirection)
     }
 
     private fun handleUserRetrievedState(cartoon: List<Cartoon>) {
