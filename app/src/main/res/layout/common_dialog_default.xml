@@ -18,8 +18,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animationView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -58,9 +58,10 @@
         <Button
             android:id="@+id/negativeButton"
             style="@style/AppTheme.Button.Large"
+            android:background="@drawable/button_background"
             android:layout_width="@dimen/common_dialog_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dialog_action_button_space"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="@dimen/dialog_component_space"
             app:layout_constraintEnd_toStartOf="@+id/positiveButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +72,10 @@
         <Button
             android:id="@+id/positiveButton"
             style="@style/AppTheme.Button.Large"
+            android:background="@drawable/button_background"
             android:layout_width="@dimen/common_dialog_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dialog_action_button_space"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/negativeButton"
             app:layout_constraintTop_toBottomOf="@+id/errorTextView"
